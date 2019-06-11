@@ -1,0 +1,31 @@
+GET http://localhost:3000/api/headerList.json
+Accept: application/json
+
+###
+
+GET http://localhost:3000/manifest
+Accept: application/json
+
+<> 2019-06-05T055715.404.html
+
+###
+
+GET http://localhost:3000/manifest.json
+Accept: application/json
+
+<> 2019-06-05T055649.200.json
+
+###
+
+GET http://localhost:3000/api/getHeaderList
+Accept: application/json
+
+<> 2019-06-05T055553.404.html
+
+###
+
+GET http://localhost:80/api/getHeaderList
+Accept: application/json
+
+###
+
