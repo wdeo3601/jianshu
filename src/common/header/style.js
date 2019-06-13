@@ -2,7 +2,13 @@ import styled from 'styled-components'
 import logoPic from '../../statics/logo.png'
 
 export const HeaderWrapper = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  margin: 0 auto;
   height: 56px;
   border-bottom: 1px solid #f0f0f0;
 `;
@@ -101,7 +107,7 @@ export const SearchInfo = styled.div`
   width: 240px;
   padding: 0 20px;
   margin-left: 20px;
-  //background: green;
+  background: white;
   box-shadow: 0 0 8px rgba(0,0,0,.2);
 `;
 

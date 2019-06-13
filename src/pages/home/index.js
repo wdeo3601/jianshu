@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
-import {HomeLeft, HomeRight, HomeWrapper} from './style'
-import Topic from './components/Topic'
-import List from './components/List'
-import Recommend from './components/Recommend'
-import Writer from './components/Writer'
+import {BackTop, HomeLeft, HomeRight, HomeWrapper} from './style';
+import Topic from './components/Topic';
+import List from './components/List';
+import Recommend from './components/Recommend';
+import Writer from './components/Writer';
+import {connect} from "react-redux";
+import {actionCreators} from './store'
 
 class Home extends Component {
+
+  handleScrollTop() {
+    window.scrollTo(0, 0)
+  }
+
   render() {
     return (
       <HomeWrapper>
         <HomeLeft>
           <img className='banner-img'
+               alt=''
                src='https://upload.jianshu.io/admin_banners/web_images/4660/224da83c76e01d5deff07e163615921233af5c82.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540'/>
           <Topic/>
           <List/>
@@ -19,9 +27,46 @@ class Home extends Component {
           <Recommend/>
           <Writer/>
         </HomeRight>
+        {
+          this.props.showScroll ?
+            <BackTop onClick={this.handleScrollTop}>顶部</BackTop> :
+            null
+        }
+
       </HomeWrapper>
     );
   }
+
+  componentDidMount() {
+    this.props.changeHomeData();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    window.addEventListener('scroll', this.props.changeScrollTopShow)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.props.changeScrollTopShow)
+  }
 }
 
-export default Home;
+const mapState = (state) => ({
+  showScroll: state.getIn(['home', 'showScroll'])
+});
+
+const mapDispatch = (dispatch) => ({
+  changeHomeData() {
+    dispatch(actionCreators.getHomeInfo());
+  },
+  changeScrollTopShow() {
+    if (document.documentElement.scrollTop > 200) {
+      dispatch(actionCreators.toggleTopShow(true))
+    } else {
+      dispatch(actionCreators.toggleTopShow(false))
+    }
+    console.log(document.documentElement.scrollTop)
+  }
+});
+
+export default connect(mapState, mapDispatch)(Home);
